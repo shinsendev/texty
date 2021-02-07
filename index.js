@@ -6,10 +6,16 @@ function replace(input, gender, params) {
     const searchPattern = /(<:.*?>)/gm;
     const regex = new RegExp(searchPattern, 'g');
 
-    // const array = [...input.matchAll(searchPattern)];
-
     function conversion(correspondance, p1, decalage, chaine) {
-        const result = p1.match(/<:'(.*)'(,)'*(.*?)'*>/);
+        let result;
+
+        // is it a dynamic value?
+        if ( result = p1.match(/<:([a-z][a-zA-Z]{1}.*?)>/)) {
+            return params[result[1]];
+        }
+
+        // is it a gender conversion?
+        result = p1.match(/<:'(.*)'(,)'*(.*?)'*>/);
 
         // if it is a ', it means it's a gender conversion
         if (result[2] === ',') {
@@ -23,4 +29,3 @@ function replace(input, gender, params) {
 
     return input.replace(regex, conversion);
 }
-

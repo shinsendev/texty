@@ -10,3 +10,9 @@ Will become, if gender narrator is female associated:
 ```
 elle est née à Lyon
 ```
+
+We can inject dynamic value inside text with the following syntax:
+
+```
+<:name> is a person.
+```
