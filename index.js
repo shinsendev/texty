@@ -19,7 +19,7 @@ function replace(input, gender, params) {
         }
 
         // is it a gender conversion?
-        result = p1.match(/<:'(.*)'(,)'*(.*?)'*>/);
+        result = p1.match(/<:'(.*)'(,)['\s]*(.*?)'*>/);
 
         // if it is a ', it means it's a gender conversion
         if (result[2] === ',') {
