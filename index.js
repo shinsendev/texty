@@ -3,6 +3,10 @@ exports.convert = function(input, gender, params = {}) {
 }
 
 function replace(input, gender, params) {
+    if (!input) {
+        return;
+    }
+
     const searchPattern = /(<:.*?>)/gm;
     const regex = new RegExp(searchPattern, 'g');
 
