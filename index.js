@@ -14,8 +14,8 @@ function replace(input, gender, params) {
         let result;
 
         // is it conditional text?
-        if (result = p1.match(/<:if\((?<condition>.*?)\)"(?<default>.*?)"\s*,\s*?"(?<else>.*)">/)) {
-            return convertCondition(result);
+        if (result = p1.match(/<:if\s*\((?<condition>.*?)\)\s*"(?<default>.*?)"\s*,\s*?"(?<else>.*)">/)) {
+            return convertCondition(result, params);
         }
 
         // is it a dynamic value?
@@ -32,11 +32,11 @@ function replace(input, gender, params) {
     return input.replace(regex, conversion);
 }
 
-function convertCondition(result) {
+function convertCondition(result, params) {
     let condition = result['groups']['condition'];
     let defaultText = result['groups']['default'];
     let alternativeText = result['groups']['else'];
-    let isGranted = checkCondition(condition);
+    let isGranted = checkCondition(condition, params);
 
     if (isGranted) {
         return defaultText;
@@ -45,14 +45,28 @@ function convertCondition(result) {
     return alternativeText;
 }
 
-function checkCondition(condition) {
-    let parsedCondition = condition.match(/(?<g1>^.*?)(?<comparator>(?:\>|\<|\=){1}[\=]{0,1})\s*(?<g2>\d*)/);
+function checkCondition(condition, params) {
+    let parsedCondition = condition.match(/(?<g1>^.*?)\s*(?<comparator>(?:\>|\<|\=){1}[\=]{0,1})\s*(?<g2>\d*)/);
+    let g1 = parsedCondition['groups']['g1'];
+    let g2 = parsedCondition['groups']['g2'];
+    let comparator = parsedCondition['groups']['comparator'];
 
-    let vote = false;
+    if (params[g1]) {
+        switch (comparator) {
+            case '>':
+                return params[g1] > g2;
+            case  '<':
+                return params[g1] < g2;
+            case '=':
+                return params[g1] === g2;
+            case '<=':
+                return params[g1] <= g2;
+            case '>=':
+                return params[g1] >= g2
+        }
+    }
 
-    console.log(parsedCondition);
-
-    return vote;
+    return false;
 }
 
 function convertGender(result, gender) {
