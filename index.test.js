@@ -20,6 +20,7 @@ test('convert dynamic text', () => {
 
 test('convert conditional text', () => {
     const input = '<:if(sanity > 4)"You read the article", "You try to read but you don\'t understand anything">!!!';
-    const output = 'You read the article';
-    expect(texty.convert(input, 'M', {"sanity": 6})).toBe(output);
+    const output = 'You read the article!!!';
+    const output2 = 'You try to read but you don\'t understand anything!!!';
+    expect(texty.convert(input, 'M', {"sanity": 6})).toBe(output2);
 })

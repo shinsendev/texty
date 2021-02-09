@@ -14,7 +14,7 @@ function replace(input, gender, params) {
         let result;
 
         // is it conditional text?
-        if (result = p1.match(/<:if\((?<condition>.*?)\)"(?<default>.*?)"\s*,\s*?(?<else>.*)>/)) {
+        if (result = p1.match(/<:if\((?<condition>.*?)\)"(?<default>.*?)"\s*,\s*?"(?<else>.*)">/)) {
             return convertCondition(result);
         }
 
@@ -45,16 +45,6 @@ function convertCondition(result) {
     return alternativeText;
 }
 
-function convertGender(result, gender) {
-    if (result[2] === ',') {
-        if (gender === 'F') {
-            return result[1];
-        } else {
-            return result[3];
-        }
-    }
-}
-
 function checkCondition(condition) {
     let parsedCondition = condition.match(/(?<g1>^.*?)(?<comparator>(?:\>|\<|\=){1}[\=]{0,1})\s*(?<g2>\d*)/);
 
@@ -63,4 +53,14 @@ function checkCondition(condition) {
     console.log(parsedCondition);
 
     return vote;
+}
+
+function convertGender(result, gender) {
+    if (result[2] === ',') {
+        if (gender === 'F') {
+            return result[1];
+        } else {
+            return result[3];
+        }
+    }
 }
