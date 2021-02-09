@@ -1,9 +1,9 @@
 {
   "name": "@shinsen/texty",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,8 @@
   "author": "shinsen",
   "license": "ISC",
   "homepage": "",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
 }
